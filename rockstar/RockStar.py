@@ -20,17 +20,24 @@ int main()
 
 DEFAULT_FILE_NAME = 'main.cpp'
 
+def subtract(art, hist):
+    for r in range(len(art)):
+        for c in range(len(art[r])):
+            if 0 <= r < len(hist) and 0 <= c < len(hist[r]):
+                art[r][c] = max(0, art[r][c] - hist[r][c])
 
 class RockStar:
 
-    def __init__(self, days=400, days_off=(), file_name=DEFAULT_FILE_NAME,
+    def __init__(self, days=400, repo_path=False, days_off=(), file_name=DEFAULT_FILE_NAME,
                  code=HELLO_WORLD_CPP, off_fraction=0.0):
-        self.repo = None
         self.days = days
-        self.file_name = file_name
-        self.file_path = os.path.join(os.getcwd(), file_name)
         self.code = code
-        self.repo_path = os.getcwd()
+        if repo_path:
+            self.repo_path = repo_path
+        else:
+            self.repo_path = os.getcwd()
+        self.file_name = file_name
+        self.file_path = os.path.join(self.repo_path, file_name)
         self.messages_file_name = 'commit-messages.json'
         self.messages_file_path = os.path.join(os.path.dirname(
             os.path.abspath(__file__)), self.messages_file_name)
@@ -73,22 +80,91 @@ class RockStar:
                     second=randint(0, 59), microsecond=randint(0, 999999))
 
     def _get_dates_list(self):
-        def dates():
-            today = date.today()
-            for day_delta in range(self.days):
-                day = today - timedelta(days=day_delta)
-                if day.strftime('%A') in self.days_off:
-                    continue
-                if randint(1, 100) < self.off_fraction * 100:
-                    continue
-                for i in range(randint(1, 10)):
-                    yield day
+
+#         def dates():
+#             today = date.today()
+#             for day_delta in range(self.days):
+#                 day = today - timedelta(days=day_delta)
+#                 if day.strftime('%A') in self.days_off:
+#                     continue
+#                 if randint(1, 100) < self.off_fraction * 100:
+#                     continue
+#                 for i in range(randint(1, 10)):
+#                     yield day
+        R = 10
+        H = 6
+        M = 3
+        L = 1
+
+
+        winamp = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, L, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, L, 0, L, 0, 0, 0, L, 0, 0, 0],
+            [0, 0, L, 0, L, 0, 0, 0, L, 0, 0, 0, L, 0, 0, 0, L, 0, L, 0, 0, 0, L, 0, L, 0],
+            [0, 0, M, 0, M, 0, 0, 0, M, 0, M, 0, M, 0, 0, 0, M, 0, M, 0, 0, 0, M, 0, M, 0],
+            [M, 0, M, 0, M, 0, M, 0, M, 0, M, 0, M, 0, 0, 0, M, 0, M, 0, M, 0, M, 0, M, 0],
+            [R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0],
+            [R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0],
+        ]
+        pacman = [
+            [0, M, M, M, 0, 0, 0, 0, R, R, R, 0, 0, 0, 0, 0, L, L, L, 0, 0, 0, 0, 0, 0, 0],
+            [M, M, M, M, M, 0, 0, R, R, R, R, R, 0, 0, 0, L, L, L, L, L, 0, 0, 0, 0, 0, 0],
+            [M, 0, M, 0, M, 0, 0, R, 0, R, 0, R, 0, 0, L, L, L, L, 0, 0, 0, L, 0, 0, 0, 0],
+            [M, H, M, H, M, 0, 0, R, H, R, H, R, 0, 0, L, L, L, 0, 0, 0, L, L, L, 0, 0, L],
+            [M, M, M, M, M, 0, 0, R, R, R, R, R, 0, 0, L, L, L, L, 0, 0, 0, L, 0, 0, 0, 0],
+            [M, M, M, M, M, 0, 0, R, R, R, R, R, 0, 0, 0, L, L, L, L, L, 0, 0, 0, 0, 0, 0],
+            [M, 0, M, 0, M, 0, 0, R, 0, R, 0, R, 0, 0, 0, 0, L, L, L, 0, 0, 0, 0, 0, 0, 0],
+        ]
+        hist = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        ]
+
+        art = winamp
+        subtract(art, hist)
+
+        # Start on the Sunday 31 weeks ago
+        # (Seems like GitHub isn't populating the graph before that)
+        start = date.today()
+        if start.weekday() < 6:
+            start = start - timedelta(days=start.weekday()+1)
+        start = start - timedelta(days=31*7)
+        date_string = '2022-08-28'
+        start = datetime.strptime(date_string, '%Y-%m-%d')
+
+        # print(start)
+        # exit
+
+        total_days = len(art) * len(art[0])
+
+        dates = []
+
+        for day_delta in range(total_days):
+            day = start + timedelta(days=day_delta)
+
+            commit_count = art[day_delta % 7][day_delta // 7]
+
+            for commit_number in range(commit_count):
+                dates.append(day)
+
         return [datetime.combine(d, self._get_random_time())
-                for d in dates()]
+                for d in dates]
+
+
+
 
     def make_me_a_rockstar(self):
         self.repo = git.Repo.init(self.repo_path)
         label = 'Making you a Rockstar Programmer'
+        # arr = self._get_dates_list()
+        # print(arr[0])
+        # return
+
         with click.progressbar(self._get_dates_list(), label=label) as bar:
             for commit_date in bar:
                 self._edit_and_commit(str(uuid.uuid1()), commit_date)
@@ -98,6 +174,7 @@ class RockStar:
 
 @click.command()
 @click.option('--days', type=int, default=400)
+@click.option('--repo_path')
 def cli(days):
-    magic = RockStar(days=days)
+    magic = RockStar(days=days, repo_path=repo_path)
     magic.make_me_a_rockstar()
