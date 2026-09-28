@@ -107,13 +107,13 @@ class RockStar:
             [R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0, R, 0],
         ]
         pacman = [
-            [0, M, M, M, 0, 0, 0, 0, R, R, R, 0, 0, 0, 0, 0, L, L, L, 0, 0, 0, 0, 0, 0, 0],
-            [M, M, M, M, M, 0, 0, R, R, R, R, R, 0, 0, 0, L, L, L, L, L, 0, 0, 0, 0, 0, 0],
-            [M, 0, M, 0, M, 0, 0, R, 0, R, 0, R, 0, 0, L, L, L, L, 0, 0, 0, L, 0, 0, 0, 0],
-            [M, H, M, H, M, 0, 0, R, H, R, H, R, 0, 0, L, L, L, 0, 0, 0, L, L, L, 0, 0, L],
-            [M, M, M, M, M, 0, 0, R, R, R, R, R, 0, 0, L, L, L, L, 0, 0, 0, L, 0, 0, 0, 0],
-            [M, M, M, M, M, 0, 0, R, R, R, R, R, 0, 0, 0, L, L, L, L, L, 0, 0, 0, 0, 0, 0],
-            [M, 0, M, 0, M, 0, 0, R, 0, R, 0, R, 0, 0, 0, 0, L, L, L, 0, 0, 0, 0, 0, 0, 0],
+            [0, M, M, M, 0, 0, 0, 0, R, R, R, 0, 0, 0, 0, 0, L, L, L, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [M, M, M, M, M, 0, 0, R, R, R, R, R, 0, 0, 0, L, L, L, L, L, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [M, 0, M, 0, M, 0, 0, R, 0, R, 0, R, 0, 0, L, L, L, L, 0, 0, 0, 0, 0, 0, 0, L, 0, 0, 0, 0],
+            [M, H, M, H, M, 0, 0, R, H, R, H, R, 0, 0, L, L, L, 0, 0, 0, 0, L, 0, 0, L, L, L, 0, 0, L],
+            [M, M, M, M, M, 0, 0, R, R, R, R, R, 0, 0, L, L, L, L, 0, 0, 0, 0, 0, 0, 0, L, 0, 0, 0, 0],
+            [M, M, M, M, M, 0, 0, R, R, R, R, R, 0, 0, 0, L, L, L, L, L, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [M, 0, M, 0, M, 0, 0, R, 0, R, 0, R, 0, 0, 0, 0, L, L, L, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         ]
         hist = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -125,7 +125,7 @@ class RockStar:
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         ]
 
-        art = winamp
+        art = pacman
         subtract(art, hist)
 
         # Start on the Sunday 31 weeks ago
@@ -134,7 +134,8 @@ class RockStar:
         if start.weekday() < 6:
             start = start - timedelta(days=start.weekday()+1)
         start = start - timedelta(days=31*7)
-        date_string = '2022-08-28'
+        date_string = '2025-03-02'
+
         start = datetime.strptime(date_string, '%Y-%m-%d')
 
         # print(start)
